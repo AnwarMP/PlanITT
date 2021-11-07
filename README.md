@@ -7,13 +7,13 @@ All api handles and request are stored in `api/eventapi`
 
 
 ## Features To Be Done
-- [ ] Connect to MongoDB Server 
-- [ ] Test locally with MongoDB
-- [ ] Finish Pi PUT Requests
 - [ ] Front end JSON File handling
 
 
 ## Feature Completed
+- [x] Connect to MongoDB Server 
+- [x] Test locally with MongoDB
+- [x] Finish Pi PUT Requests
 - [x] API Handles Created
 - [x] Event schema created
 - [x] Raspberry Pi .exe NFC Reader Working
