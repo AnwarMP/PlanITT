@@ -1,12 +1,15 @@
 # PlanITT
 NFC Checkin System with Database and Raspberry PI hardware
 
-Start the server by running `npm run dev` for updating with changes\
-Contains code from FrontEnd in `public` folder nested repository\
-All api handles and request are stored in `api/eventapi`\
+Start the server by running `npm run dev` for updating with changes
+Contains code from FrontEnd in `public` folder git status should work independently there
+All api handles and request are stored in `api/eventapi`
 
 
 ## Features To Be Done
+- [ ] Connect to MongoDB Server 
+- [ ] Test locally with MongoDB
+- [ ] Finish Pi PUT Requests
 - [ ] Front end JSON File handling
 
 
