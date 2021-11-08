@@ -6,10 +6,10 @@ Contains code from FrontEnd in `public` folder git status should work independen
 All api handles and request are stored in `api/eventapi`
 
 ## Feature Completed
-- [x Connect to MongoDB Server 
-- [x Test locally with MongoDB
-- [x]Finish Pi PUT Requests
-- [x Front end JSON File handling
+- [x] Connect to MongoDB Server 
+- [x] Test locally with MongoDB
+- [x] Finish Pi PUT Requests
+- [x] Front end JSON File handling
 - [x] Connect to MongoDB Server 
 - [x] Test locally with MongoDB
 - [x] Finish Pi PUT Requests
