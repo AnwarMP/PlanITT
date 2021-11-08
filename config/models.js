@@ -9,7 +9,9 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-});
+}, 
+{ strict: false }
+);
 
 const User = mongoose.model("User", UserSchema);
 
