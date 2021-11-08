@@ -6,7 +6,7 @@ const uuid 		= require('uuid');
 //JSON from a file
 const members = require('../../eventinfodata');
 const userModel = require("../../config/models");
-
+const events = require("../../config/events");
 
 //Get all information about the event
 //http://localhost:5001/api/eventinfo/geteventinfo
