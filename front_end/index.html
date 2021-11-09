@@ -1,0 +1,169 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
+    <title>Plan iTT</title>
+</head>
+<body>
+
+<script>
+    function tableUpdate(data) {
+        var tablearea = document.getElementById('tablearea');//,
+        var table2area = document.getElementById('checkedinarea');
+		var tableHeaderRowCount = 1;
+		var table = document.getElementById('table');
+		if(table != null) {
+			var rowCount = table.rows.length;
+			for (var i = tableHeaderRowCount; i < rowCount; i++) {
+			    table.deleteRow(tableHeaderRowCount);
+			}
+		}
+		else {
+			table = document.createElement('table');
+        }
+        
+        var checkedintable = document.getElementById('ctable');
+        if(checkedintable != null) {
+			var rowCount = checkedintable.rows.length;
+			for (var i = tableHeaderRowCount; i < rowCount; i++) {
+			    table.deleteRow(tableHeaderRowCount);
+			}
+		}
+		else {
+			checkedintable = document.createElement('ctable');
+        }
+        
+
+		document.getElementById('tablearea').style.display = 'none';
+        document.getElementById('tablearea').style.display = 'block';
+        
+
+		document.getElementById('checkedinarea').style.display = 'none';
+        document.getElementById('checkedinarea').style.display = 'block';
+
+		for(var i = 0; i < data.length; i++) {
+		    var obj = data[i];
+
+		    tr2 = document.createElement('tr');
+
+			tr2.appendChild( document.createElement('td') );
+			tr2.appendChild( document.createElement('td') );
+
+			tr2.cells[0].appendChild( document.createTextNode(obj.name + ' ') )
+			if(obj.checkedin === 1) tr2.cells[1].appendChild( document.createTextNode(' checked in') );
+            else if(obj.checkedin === 0) tr2.cells[1].appendChild( document.createTextNode('checked out') );
+
+            if(obj.checkedin === 1) checkedintable.appendChild(tr2);
+            else table.appendChild(tr2);		
+		}
+
+       
+
+        table2area.appendChild(checkedintable);
+		tablearea.appendChild(table);
+
+  	}
+
+	function onError(url, params, method, sync, CallBack) {
+
+    }
+    
+    function deleteTable(){
+        document.getElementById('checkedinarea').innerHTML = "";
+        document.getElementById('tablearea').innerHTML = "";
+    }
+
+    function clearChecked(){
+        //document.getElementById('checkinarea').innerHTML = "";
+        var div = document.getElementById('checkinarea');
+        while(div.hasChildNodes()) {
+            div.removeChild(div.firstChild);
+        }
+
+    }
+    function removeAllChildNodes(node) {
+        i = (typeof(node) == "object") ? node : document.getElementById(node);
+
+        while (i.hasChildNodes()) {
+            i.removeChild(i.firstChild);
+        }
+    }
+
+    function getCheckedInList()
+    {
+        ret  = invokeApi('http://localhost:5001/api/eventinfo/geteventinfo')
+        console.log(ret[0].name);
+        deleteTable();
+        tableUpdate(ret)
+    }
+
+    function deleteAll(){
+        ret = invokeApi('http://localhost:5001/api/eventinfo/delete');
+                deleteTable();
+    }
+	function invokeApi(url, params, method, sync, CallBack, customErrorHandler) {
+        AJAX 	= new XMLHttpRequest(),
+      	ret 	= false,
+        timeout = null;
+
+        params = params || null;
+       	method = method || "GET";
+        sync = sync || false;
+
+        AJAX.open(method, url, sync);
+        AJAX.setRequestHeader("Accept", "application/json");
+        AJAX.setRequestHeader("Content-Type", "application/json");
+        AJAX.onerror = function () {
+            if (typeof customErrorHandler !== 'undefined') {
+                return customErrorHandler(url, params, method, sync, CallBack);
+            } else {
+                ret = onError(url, params, method, sync, CallBack);
+            }
+
+        };
+
+        timeout = setTimeout((function (u, p) {
+            return function () {
+                // console.log("abort ajax request: " + u + " | " + p);
+                AJAX.abort();
+            };
+        }(url, params)), 60000);
+
+        AJAX.onload = function () {
+            try {
+                var B = JSON.parse(AJAX.responseText);
+                this.errors = 0;
+                clearTimeout(timeout);
+                ret = B;
+                if (typeof CallBack === 'function') {
+                    setTimeout(function () {
+                        CallBack(ret);
+                    }, 1);
+                }
+            } catch (err) {
+                if (typeof customErrorHandler !== 'undefined') {
+                    return customErrorHandler(url, params, method, sync, CallBack);
+                } else {
+                    ret = onError(url, params, method, sync, CallBack);
+                }
+            }
+        };
+
+        AJAX.send(params);	
+        return ret;
+  	}
+
+</script>
+<h1>Currently Checked-In</h1>
+<div  id = 'tablearea'></div>
+<div  id = 'checkedinarea'></div>
+
+<div class="container">
+    <button id = "button1" class = "button" onclick="getCheckedInList()">Click</button>
+    <button id = "button2" class = "button" onclick="deleteAll()">Checkout All Members</button>
+</div>
+
+</body>
+</html>

@@ -29,7 +29,7 @@ app.use(express.json());
 app.use('/api/eventinfo',require('./routes/api/eventinfo'));
 
 //Set a static folder using express. Any static file we can ad in this route
-app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname,'front_end')));
 
 
 app.listen(PORT,() => console.log(`Sever started on port ${PORT}`));
